@@ -70,13 +70,13 @@ const generateHtmlCode = async(images) => {
 
 // to get images using pexel api and passing apiKey as a header
 const getImages = async (apiUrl) => {
-  loadmoreBtn.innerText = "Loading...";
+  loadmoreBtn.innerText = "Loading Images...";
   loadmoreBtn.classList.add("disabled");
   const res = await fetch(apiUrl, { headers: { Authorization: apiKey } });
   const data = await res.json();
   // console.log(data.photos);
   generateHtmlCode(data.photos); //generate an htmlCode for each image card and append it to the image container
-  loadmoreBtn.innerText = "Load More";
+  loadmoreBtn.innerText = "Load More Images";
   loadmoreBtn.classList.remove("disabled");
 };
 // loading more images when click on load more button
