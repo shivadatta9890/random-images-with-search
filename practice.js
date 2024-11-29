@@ -14,7 +14,7 @@ let popUp = document.querySelector(".modal-window");
 const crossIcon = document.querySelector(".uil-times");
 const downloadIcon = document.querySelector(".uil-import");
 
-const apiKey = {your_api_key};
+const apiKey = "0A7wmLB2eZesKoGvmZykydt69OzEgghp9mQV5XGicDoFoPKC8rwuIjbL";
 let currentPage = 1;
 const perPage = 4;
 let userInputValue = null;
