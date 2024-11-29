@@ -82,7 +82,7 @@ const getImages = async (apiUrl) => {
 // loading more images when click on load more button
 const loadMoreImages = async() => {
   currentPage++;
-  let apiUrl = `https://api.pexels.com/v1/curated?&page=${currentPage}per_page=${perPage}`;
+  let apiUrl = `https://api.pexels.com/v1/curated?&page=${currentPage}&per_page=${perPage}`;
   apiUrl = userInputValue
     ? `https://api.pexels.com/v1/search?query=${userInputValue}&page=${currentPage}&per_page=${perPage}`
     : apiUrl; //if userInput is true then load images related to that url otherwise load default url images.
