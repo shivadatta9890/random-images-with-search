@@ -16,7 +16,7 @@ const downloadIcon = document.querySelector(".uil-import");
 
 const apiKey = {your_api_key};
 let currentPage = 1;
-const perPage = 15;
+const perPage = 4;
 let userInputValue = null;
 
 // to show/hide pop up
@@ -54,14 +54,14 @@ const generateHtmlCode = async(images) => {
   imagesContainer.innerHTML += images
     .map(
       (img) =>
-        `<li class="card" onclick="showPopUp('${img.photographer}','${img.src.large2x}')">
-          <img src=${img.src.original} alt="${img.alt}" />
+        `<li class="card" onclick="showPopUp('${img.photographer}','${img.src.portrait}')">
+          <img src=${img.src.portrait} alt="${img.alt}" />
           <div class="details">
             <div class="photographer-name">
               <i class="uil uil-camera"></i>
               <a href=${img.photographer_url} target="_blank"; onclick=event.stopPropagation()><span>${img.photographer}</span></a>
             </div>
-            <button onclick=downloadImg("${img.src.original}");event.stopPropagation()><i class="uil uil-import"></i></button>
+            <button onclick=downloadImg("${img.src.portrait}");event.stopPropagation()><i class="uil uil-import"></i></button>
           </div>
         </li>`
     )
