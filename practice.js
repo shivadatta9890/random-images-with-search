@@ -105,7 +105,7 @@ const loadsearchImages = async(e) => {
 };
 
 getImages(
-  `https://api.pexels.com/v1/curated?&page=${currentPage}per_page=${perPage}`
+  `https://api.pexels.com/v1/curated?&page=${currentPage}&per_page=${perPage}`
 );
 
 loadmoreBtn.addEventListener("click", loadMoreImages);
