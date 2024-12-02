@@ -39,7 +39,7 @@ const downloadImage = async(img)=>{
   a.href = URL.createObjectURL(file);
   a.download= "pexels image "+new Date().getTime();
   a.click();
-  console.log(a);
+  // console.log(a);
 }
 
 // code for htmlCode to render images and append it to the imagesContainer
@@ -52,7 +52,7 @@ const htmlCode = async (images) => {
           <div class="details">
             <div class="photographer-name">
               <i class="uil uil-camera" onclick="stopPopUp(event)"></i>
-              <a href=${img.photographer_url} target="_blank";onclick="stopPopUp(event)"><span>${img.photographer}</span></a>
+              <a href="${img.photographer_url}" target="_blank" onclick="stopPopUp(event)"><span>${img.photographer}</span></a>
             </div>
             <button><i class="uil uil-import" onclick=downloadImage("${img.src.portrait}");event.stopPropagation()></i></button>
           </div>
