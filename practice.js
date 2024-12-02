@@ -28,6 +28,10 @@ const hidePopUp = async()=>{
 
 }
 
+const stopPopUp = async(event)=>{
+  event.stopPropagation();
+}
+
 const downloadImage = async(img)=>{
   let a =document.createElement("a");
   const res = await fetch(img);
@@ -47,8 +51,8 @@ const htmlCode = async (images) => {
           <img src=${img.src.portrait} alt=${img.alt} />
           <div class="details">
             <div class="photographer-name">
-              <i class="uil uil-camera"></i>
-              <a href=${img.photographer_url} target="_blank"><span>${img.photographer}</span></a>
+              <i class="uil uil-camera" onclick="stopPopUp(event)"></i>
+              <a href=${img.photographer_url} target="_blank";onclick="stopPopUp(event)"><span>${img.photographer}</span></a>
             </div>
             <button><i class="uil uil-import" onclick=downloadImage("${img.src.portrait}");event.stopPropagation()></i></button>
           </div>
