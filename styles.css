@@ -66,20 +66,24 @@ i {
 
 .gallery {
   display: flex;
+  flex-wrap:wrap;
   align-items: center;
   flex-direction: column;
 }
 .gallery .images {
+  /* flex-wrap: wrap; */
+  /* grid-template-columns: repeat(4,320px); */
   columns: 5 340px;
   margin-top: 40px;
   max-width: 95%;
   gap: 16px;
 }
-.gallery .total_results{
-  margin-top:40px;
-}
 .images img {
   width: 100%;
+  /* width:320px; */
+}
+.gallery .total_results{
+  margin-top:40px;
 }
 .images .card {
   display: flex;
@@ -113,7 +117,7 @@ i {
   align-items: center;
   padding: 15px 20px;
   justify-content: space-between;
-  transition: bottom 0.3s ease;
+  transition: bottom 0.5s ease-in-out;
 }
 .card:hover .details {
   bottom: 0;
