@@ -75,6 +75,9 @@ i {
   max-width: 95%;
   gap: 16px;
 }
+.gallery .total_results{
+  margin-top:40px;
+}
 .images img {
   width: 100%;
 }
