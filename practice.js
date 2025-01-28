@@ -1,132 +1,174 @@
-const imagesContainer = document.querySelector(".images");
+let imagesContainer = document.querySelector(".images");
 const apiKey = "0A7wmLB2eZesKoGvmZykydt69OzEgghp9mQV5XGicDoFoPKC8rwuIjbL";
-let currentPage = 1;
-const perPage = 4;
-const loadMoreBtn = document.querySelector(".load-more");
-const searchBox = document.querySelector(".search-box .input");
-const totalResults = document.querySelector(".total_results");
+let loadMoreBtn = document.querySelector(".load-more");
+let userInput = document.querySelector(".search-box .input");
+let totalResults = document.querySelector(".total_results");
 let modalWindow = document.querySelector(".modal-window");
-let crossIcon = document.querySelector(".modal-window .uil-times");
-const downloadIcon = document.querySelector(".modal-window .uil-import");
-let userInput = null;
-let searchCurrentPage = 1;
+let closeIcon = document.querySelector(".modal-window .uil-times");
+let downloadIcon = document.querySelector(".modal-window .uil-import");
+const modal = document.getElementById("customAlert");
+// const savedSearchTerm = localStorage.getItem("userInput");
 
-const showPopUp = async (image,name)=>{
+// It is used to close the pop up when user click on cross icon
+const closePopUp = async () => {
+  modalWindow.classList.remove("show");
+  document.body.style.overflow = "visible";
+};
+
+closeIcon.addEventListener("click", closePopUp);
+let userInputValue = "";
+let perPage = 4;
+let currentPage = 1;
+
+// It is used to show the pop up when user click on image card
+const showPopUp = async (image, photographer) => {
   modalWindow.classList.add("show");
   let img = modalWindow.querySelector("img");
-  let photographerName = modalWindow.querySelector("span");
-  downloadIcon.setAttribute("data-img",image);
+  downloadIcon.setAttribute("data-img", image);
   img.src = image;
-  photographerName.innerText = name;
-  document.body.style.overflow = 'hidden';
-  // console.log("show pop up ",image,name);
-}
-const hidePopUp = async()=>{
-  modalWindow.classList.remove("show");
-  // console.log("hide popup clicked");
-  document.body.style.overflow = 'auto';
+  let photographerName = modalWindow.querySelector("span");
+  photographerName.innerText = photographer;
+  document.body.style.overflow = "hidden";
+};
 
-}
-
-const stopPopUp = async(event)=>{
-  event.stopPropagation();
-}
-
-const downloadImage = async(img)=>{
-  let a =document.createElement("a");
-  const res = await fetch(img);
-  let file = await res.blob();
+// It is used to download image,on click of download icon
+const downloadImage = async (imgUrl) => {
+  const res = await fetch(imgUrl);
+  const file = await res.blob();
+  // console.log("res",res);
+  // console.log("file",file);
+  let a = document.createElement("a");
   a.href = URL.createObjectURL(file);
-  a.download= "pexels image "+new Date().getTime();
+  a.download = "Pexels Image " + new Date().getTime();
   a.click();
-  // console.log(a);
-}
 
-// code for htmlCode to render images and append it to the imagesContainer
+  // console.log("download image", imgUrl);
+};
+
+// generate html code
 const htmlCode = async (images) => {
-  imagesContainer.innerHTML += images
-    .map(
-      (img) =>
-        `<li class="card" onclick='showPopUp("${img.src.portrait}","${img.photographer}")'>
-          <img src=${img.src.portrait} alt=${img.alt} />
-          <div class="details">
+  images.map((image) => {
+    imagesContainer.innerHTML += `<li class="card" onclick="showPopUp('${image.src.portrait}','${image.photographer}')">
+          <img src="${image.src.portrait}" alt="${image.alt}" />
+          <div class="details" onclick="event.stopPropagation()">
             <div class="photographer-name">
-              <i class="uil uil-camera" onclick="stopPopUp(event)"></i>
-              <a href="${img.photographer_url}" target="_blank" onclick="stopPopUp(event)"><span>${img.photographer}</span></a>
+              <i class="uil uil-camera"></i>
+              <a href="${image.photographer_url}" target="_blank"><span>${image.photographer}</span></a>
             </div>
-            <button><i class="uil uil-import" onclick=downloadImage("${img.src.portrait}");event.stopPropagation()></i></button>
+            <button><i class="uil uil-import" onclick="downloadImage('${image.src.portrait}')"></i></button>
           </div>
-        </li>`
-    )
-    .join("");
+        </li>`;
+  });
 };
 
-// getting random images by fetching pexels api passing our apiKey as authorization.
-// also displaying the total random images available 
-const getImages = async (apiUrl) => {
-    loadMoreBtn.innerText = "Loading Images...";
-    loadMoreBtn.classList.add("disabled");
-    totalResults.style.display="none";
-  const res = await fetch(apiUrl, { headers: { Authorization: apiKey } });
-  const data = await res.json();
-//   console.log(data.total_results);
-  if(data.total_results === 0){
-    totalResults.style.display="initial";
-      totalResults.innerHTML = 'Sorry🥲! No Images Found... ';
-      loadMoreBtn.style.display = "none";
-  }else{
-      htmlCode(data.photos);
-      loadMoreBtn.innerText = "Load More Images";
-      loadMoreBtn.classList.remove("disabled");
-    //   console.log(data);
-    //   console.log(data.total_results);
-    totalResults.style.display="block";
-      totalResults.innerHTML = `Total Images Found : ${data.total_results}`;
-      //   console.log(apiUrl);
-    };
-}
-// calling the function
-getImages(
-  `https://api.pexels.com/v1/curated?page=${currentPage}&per_page=${perPage}`
-);
-
-// by clicking on load more cta , displaying more images 
-// if user searches any keyWord , then click on load more cta , we have to display the images related to those keyWord
-
-const loadMoreImages = async() => {
+// It is used to load more images when click on load more images button
+const loadMoreImages = async () => {
   currentPage++;
-currentPage = userInput ? searchCurrentPage++ : currentPage++;
-// console.log(currentPage);
-  let apiUrl = `https://api.pexels.com/v1/curated?page=${currentPage}&per_page=${perPage}`
-  apiUrl = userInput ? `https://api.pexels.com/v1/search?query=${userInput}&page=${searchCurrentPage}&per_page=${perPage}` : apiUrl;
-  getImages(apiUrl);
-//   console.log(apiUrl);
+  const savedSearchTerm = localStorage.getItem("userInput");
+  if (savedSearchTerm) {
+    userInputValue = savedSearchTerm;
+  }
+  // console.log("saved", savedSearchTerm);
+  // console.log("userInput", userInputValue);
+  let apiUrl = `https://api.pexels.com/v1/curated/?page=${currentPage}&per_page=${perPage}`;
+
+  apiUrl = userInputValue
+    ? `https://api.pexels.com/v1/search?query=${userInputValue}&page=${currentPage}&per_page=${perPage}`
+    : apiUrl;
+  showRandomImages(apiUrl);
+  // console.log("load more url", apiUrl);
 };
 
-// It will display the images related to the keyWords entered by user
-// if images are not available , displaying a normal error screen 
-const loadSearchImages = async(e)=>{
-    // let currentPage = 1;
-    userInput = searchBox.value;
-    if(userInput === "" && e.key==="Enter"){
-        alert("Please Enter Something...✍️");
-    }else{
-        if(e.key ==="Enter"){
-            imagesContainer.innerHTML = "";
-            // totalResults.style.display="none";
-            // totalResults.style.display="none";
-            const apiUrl = `https://api.pexels.com/v1/search?query=${userInput}&page=${searchCurrentPage}&per_page=${perPage}`;
-            getImages(apiUrl);
-            // totalResults.style.display = "initial";
-            // totalResults.innerText = `Total Images Found : ${data.total_results}`;
-            // console.log(apiUrl);
-        }
-    }
-}
+// It is used to show random images from the api
+const showRandomImages = async (apiUrl) => {
+  totalResults.style.display = "none";
+  loadMoreBtn.innerText = "Loading Images...";
+  loadMoreBtn.classList.add("disabled");
+  const res = await fetch(apiUrl, {
+    headers: {
+      Authorization: apiKey,
+    },
+  });
+  const data = await res.json();
+  if (data.total_results === 0) {
+    totalResults.style.display = "initial";
+    totalResults.innerText = "No Results Found!...";
+    // totalResults.innerHTML = "<img style='height:300px;width:400px;' src='images/error.jpg' alt='error'/> >";
+    loadMoreBtn.style.display = "none";
+  } else {
+    loadMoreBtn.style.display = "initial";
+    totalResults.style.display = "initial";
+    totalResults.innerText = `Total Results Found : ${data.total_results}`;
+    htmlCode(data.photos);
+    loadMoreBtn.innerText = "Load More Images";
+    loadMoreBtn.classList.remove("disabled");
+    console.log("show random images", apiUrl);
+  }
+  // console.log("data",data);
+  // console.log(apiUrl);
+};
 
+// showRandomImages(
+//   `https://api.pexels.com/v1/curated/?page=${currentPage}&per_page=${perPage}`
+// );
 loadMoreBtn.addEventListener("click", loadMoreImages);
-searchBox.addEventListener("keyup",loadSearchImages);
-crossIcon.addEventListener("click",hidePopUp);
-downloadIcon.addEventListener("click",(e)=>{
+
+// const storedValue = localStorage.getItem('userInput');
+
+// // If there's a stored value, set it as the input field's value
+// if (storedValue) {
+//   userInput.value = storedValue;
+// }
+
+const showAlert = async () => {
+  document.querySelector(".custom-alert").classList.add("show");
+  document.body.style.overflow = "hidden";
+};
+
+const closeAlert = async () => {
+  document.querySelector(".custom-alert").classList.remove("show");
+  document.body.style.overflow = "auto";
+};
+
+window.addEventListener("click", function (event) {
+  if (event.target === modal) {
+    closeAlert();
+  }
+});
+
+// It is used to search images based on user input
+userInput.addEventListener("keyup", (e) => {
+  userInputValue = userInput.value.trim();
+  if (userInputValue === "" && e.key === "Enter") {
+    showAlert();
+  } else {
+    if (e.key === "Enter") {
+      localStorage.setItem("userInput", userInputValue);
+      // console.log("user entered word", userInputValue);
+      // userInputValue = localStorage.getItem("userInput");
+      imagesContainer.innerHTML = "";
+      currentPage = 1;
+      let apiUrl = `https://api.pexels.com/v1/search?query=${userInputValue}&page=${currentPage}&per_page=${perPage}`;
+      showRandomImages(apiUrl);
+      // console.log("seach images", apiUrl);
+      // console.log("userinput",userInput.value);
+    }
+  }
+});
+
+window.onload = function () {
+  const savedSearchTerm = localStorage.getItem("userInput");
+  if (savedSearchTerm) {
+    userInput.value = savedSearchTerm; // Pre-fill input field with saved value
+    const apiUrl = `https://api.pexels.com/v1/search?query=${savedSearchTerm}&page=${currentPage}&per_page=${perPage}`;
+    showRandomImages(apiUrl); // Automatically trigger the search if there's a saved term
+  } else {
+    // Optionally, you can load random images if no search term is saved
+    const apiUrl = `https://api.pexels.com/v1/curated/?page=${currentPage}&per_page=${perPage}`;
+    showRandomImages(apiUrl);
+  }
+};
+
+downloadIcon.addEventListener("click", (e) => {
   downloadImage(e.target.dataset.img);
 });
