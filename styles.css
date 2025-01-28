@@ -203,3 +203,46 @@ header .buttons i {
   background: #6c7f5d;
   margin-left: 20px;
 }
+
+
+/* Initial state of the alert (hidden) */
+.custom-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: hidden; /* Start hidden */
+  opacity: 0; /* Start with zero opacity */
+  transition: visibility 0s 0.3s, opacity 0.3s ease; /* Transition for visibility and opacity */
+}
+
+.custom-alert.show {
+  visibility: visible; /* Make visible when 'show' class is added */
+  opacity: 1; /* Full opacity when shown */
+  transition: visibility 0s 0s, opacity 0.3s ease; /* Instant visibility, smooth opacity */
+}
+
+.custom-alert-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.close{
+  /* padding:5px; */
+  margin-left:20px;
+  cursor:pointer;
+  width:70px;
+  padding:5px;
+  border-radius: 10px;
+  outline:none;
+  background-color: #282c3f;
+  color:#fff;
+  font-size:18px;
+}
