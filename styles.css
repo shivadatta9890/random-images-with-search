@@ -1,0 +1,286 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.search {
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.search img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+.search .content {
+  color: #fff;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.search .content h1 {
+  font-size: 2.6rem;
+  font-weight: 600;
+}
+.search .content p {
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+.search .search-box {
+  height: 55px;
+  margin: 45px 0;
+  position: relative;
+}
+button,
+input,
+i {
+  border: none;
+  outline: none;
+  border-radius: 8px;
+}
+.search-box input {
+  height: 100%;
+  width: 100%;
+  font-size: 1.4rem;
+  padding-left: 60px;
+}
+.search-box i {
+  position: absolute;
+  top: 50%;
+  left: 23px;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: #8d8d8d;
+  /* color:red; */
+}
+
+/* .gallery {
+  display: flex;
+  flex-wrap:wrap;
+  align-items: center;
+  flex-direction: column;
+}
+.gallery .images {
+  /* flex-wrap: wrap; */
+  /* grid-template-columns: repeat(4,320px); */
+  /* columns: 5 340px;
+  margin-top: 40px;
+  max-width: 95%;
+  gap: 16px; */
+/* } */ 
+.gallery {
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+  margin-top: 20px;
+  padding:0 8px;
+}
+
+/* .gallery .images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0;
+  list-style: none;
+} */
+ .gallery {
+  display: flex;
+  justify-content: center;
+}
+
+.gallery .images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 1200px;
+  list-style: none;
+  padding: 0;
+  place-items: center; /* Center items in grid cells */
+}
+
+.images img {
+  width: 100%;
+  /* width:320px; */
+}
+.gallery .total_results{
+  /* margin-top:20px; */
+  padding:10px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.images .card {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  list-style: none;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+.gallery .load-more {
+  display:flex;
+  flex-direction: column;
+  background: #8a6cff;
+  color: #fff;
+  margin: 50px 0;
+  padding: 12px 29px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.gallery .load-more.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.card:hover {
+  cursor: pointer;
+}
+.card .details {
+  position: absolute;
+  color: #fff;
+  bottom: -100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  justify-content: space-between;
+  transition: bottom 0.5s ease-in-out;
+}
+.card:hover .details {
+  bottom: 0;
+}
+.details .photographer-name i {
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+.details .photographer-name span {
+  font-size: 1.05rem;
+}
+
+.details button {
+  font-size: 1.1rem;
+  background: #fff;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+.modal-window {
+  display: none;
+  position: fixed;
+  background: rgb(0, 0, 0, 0.65);
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+}
+.modal-window.show {
+  display: block;
+}
+.modal-window .wrapper {
+  background: #fff;
+  width: 100%;
+  max-width: 850px;
+  position: absolute;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wrapper .preview-image .img {
+  max-height: 65vh;
+  max-width: 90vh;
+}
+.preview-image {
+  display: flex;
+  /* align-items:center; */
+  justify-content: center;
+}
+.preview-image .img img {
+  width: 100%;
+  height: 100%;
+  margin-top:10px;
+  object-fit: contain;
+}
+.modal-window header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header .photographer-name {
+  color: #333;
+}
+header .photographer-name .uil-camera {
+  font-size: 1.6rem;
+}
+header .photographer-name span {
+  font-size: 1.2rem;
+  margin-left: 5px;
+}
+header .buttons i {
+  height: 40px;
+  /* color:red; */
+  color: #fff;
+  background: #8a6cff;
+  font-size: 1.1rem;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  width: 40px;
+  display: inline-block;
+}
+.buttons i:last-child {
+  background: #6c7f5d;
+  margin-left: 20px;
+}
+
+
+/* Initial state of the alert (hidden) */
+.custom-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: hidden; /* Start hidden */
+  opacity: 0; /* Start with zero opacity */
+  transition: visibility 0s 0.3s, opacity 0.3s ease; /* Transition for visibility and opacity */
+}
+
+.custom-alert.show {
+  visibility: visible; /* Make visible when 'show' class is added */
+  opacity: 1; /* Full opacity when shown */
+  transition: visibility 0s 0s, opacity 0.3s ease; /* Instant visibility, smooth opacity */
+}
+
+.custom-alert-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.close{
+  /* padding:5px; */
+  margin-left:20px;
+  cursor:pointer;
+  width:70px;
+  padding:5px;
+  border-radius: 10px;
+  outline:none;
+  background-color: #282c3f;
+  color:#fff;
+  font-size:18px;
+}
