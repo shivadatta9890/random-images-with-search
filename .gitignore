@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# But not these files
+!index.html
+!style.css
+!demo.js
+!search-image.jpg
+!.gitignore
